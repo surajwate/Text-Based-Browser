@@ -2,13 +2,13 @@ income = int(input())
 percent = 0
 
 if 0 <= income <= 15527:
-	percent = 0
+    percent = 0
 elif 15528 <= income <= 42707:
-	percent = 15
+    percent = 15
 elif 42708 <= income <= 132406:
-	percent = 25
+    percent = 25
 elif income >= 132407:
-	percent = 28
+    percent = 28
 
 calculated_tax = income * percent / 100
 
