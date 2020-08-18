@@ -1,5 +1,5 @@
 # Text-Based-Browser
-Project of JetBrains Academy on hyperskill.org
+Project of JetBrains Academy on hyperskill.org from python developer track.
 
 
 ## About
