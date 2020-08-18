@@ -5,5 +5,9 @@ files:
   text: name = input()
   learner_created: false
 feedback_link: https://hyperskill.org/learn/step/7173
-status: Unchecked
+status: Solved
+feedback:
+  message: <html>Correct solution<br/><br/>Continue on <a href="https://hyperskill.org/learn/step/7173">JetBrains
+    Academy</a></html>
+  time: Tue, 18 Aug 2020 10:52:03 UTC
 record: -1
