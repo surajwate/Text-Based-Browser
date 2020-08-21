@@ -33,12 +33,47 @@ Twitter and Square Chief Executive Officer Jack Dorsey
  Tuesday, a signal of the strong ties between the Silicon Valley giants.
 '''
 
+import os
 # write your code here
-url = input()
+import sys
 
-while url != 'exit':
-    if url == "nytimes.com":
+args = sys.argv
+folder = args[1]
+
+try:
+    os.mkdir(folder)
+except:
+    pass
+
+current_path = os.getcwd()
+path = current_path + '\\' + folder + '\\'
+
+file = ["bloomberg.com", "nytimes.com"]
+url = input()
+while (url != 'exit'):
+    if "." in url and url in file:
+        name = url.split(".")
+        file_name = ".".join(name[0:-1])
+
+        content = ""
+        if url == "nytimes.com" or 'nytimes' in file_name:
+            content = nytimes_com
+            print(nytimes_com)
+        elif url == "bloomberg.com" or 'bloomberg' in file_name:
+            content = bloomberg_com
+            print(bloomberg_com)
+
+        with open(path + file_name + '.txt', 'w') as web_file:
+            web_file.write(content)
+            file.append(file_name)
+
+    elif 'nytimes' in file:
         print(nytimes_com)
-    elif url == "bloomberg.com":
+
+    elif 'bloomberg' in file:
         print(bloomberg_com)
+
+    elif "." not in url or url not in file:
+        print("error: Please enter correct url.")
+
     url = input()
