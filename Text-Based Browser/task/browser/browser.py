@@ -41,19 +41,21 @@ args = sys.argv
 folder = args[1]
 
 try:
-    os.mkdir(folder)
+    os.mkdir(folder)  # Create a file which act like tab
 except:
     pass
 
+# Get current working directory
 current_path = os.getcwd()
+# Create a path to save the created files in
 path = current_path + '\\' + folder + '\\'
 
 file = ["bloomberg.com", "nytimes.com"]
 url = input()
 while (url != 'exit'):
-    if "." in url and url in file:
+    if "." in url and url in file:  # Condition to check if we have the url in our data (file)
         name = url.split(".")
-        file_name = ".".join(name[0:-1])
+        file_name = ".".join(name[0:-1])  # Create a file_name to save file in tab(folder)
 
         content = ""
         if url == "nytimes.com" or 'nytimes' in file_name:
@@ -63,7 +65,7 @@ while (url != 'exit'):
             content = bloomberg_com
             print(bloomberg_com)
 
-        with open(path + file_name + '.txt', 'w') as web_file:
+        with open(path + file_name + '.txt', 'w') as web_file:  # Create a file to save content
             web_file.write(content)
             file.append(file_name)
 
