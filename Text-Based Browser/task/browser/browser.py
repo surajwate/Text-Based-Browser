@@ -1,3 +1,7 @@
+import sys
+import os
+from collections import deque
+
 nytimes_com = '''
 This New Liquid Is Magnetic, and Mesmerizing
 
@@ -33,9 +37,7 @@ Twitter and Square Chief Executive Officer Jack Dorsey
  Tuesday, a signal of the strong ties between the Silicon Valley giants.
 '''
 
-import os
 # write your code here
-import sys
 
 args = sys.argv
 folder = args[1]
@@ -52,16 +54,29 @@ path = current_path + '\\' + folder + '\\'
 
 file = ["bloomberg.com", "nytimes.com"]
 url = input()
-while (url != 'exit'):
-    if "." in url and url in file:  # Condition to check if we have the url in our data (file)
+history = deque()
+
+def print_history(history: deque) -> None:
+    url = history.pop()
+    if url == 'bloomberg.com' or url == 'bloomberg':
+        print(bloomberg_com)
+    elif url == 'nytimes.com' or url == 'nytimes':
+        print(nytimes_com)
+
+
+while url != 'exit':
+    # Condition to check if we have the url in our data (file)
+    if "." in url and url in file:
+        history.append(url)
         name = url.split(".")
-        file_name = ".".join(name[0:-1])  # Create a file_name to save file in tab(folder)
+        # Create a file_name to save file in tab(folder)
+        file_name = ".".join(name[0:-1])
 
         content = ""
-        if url == "nytimes.com" or 'nytimes' in file_name:
+        if url == "nytimes.com":
             content = nytimes_com
             print(nytimes_com)
-        elif url == "bloomberg.com" or 'bloomberg' in file_name:
+        elif url == "bloomberg.com":
             content = bloomberg_com
             print(bloomberg_com)
 
@@ -69,13 +84,23 @@ while (url != 'exit'):
             web_file.write(content)
             file.append(file_name)
 
-    elif 'nytimes' in file:
+    elif url == 'nytimes':
+        history.append(url)
         print(nytimes_com)
 
-    elif 'bloomberg' in file:
+    elif url == 'bloomberg':
+        history.append(url)
         print(bloomberg_com)
+
+    elif url == 'back':
+        history.pop()  # pop the current url for printing history
+        if len(history) >= 1:
+            print_history(history)
+        else:
+            pass
 
     elif "." not in url or url not in file:
         print("error: Please enter correct url.")
 
     url = input()
+
