@@ -1,6 +1,8 @@
-import sys
 import os
+import sys
 from collections import deque
+
+import requests
 
 nytimes_com = '''
 This New Liquid Is Magnetic, and Mesmerizing
@@ -37,7 +39,42 @@ Twitter and Square Chief Executive Officer Jack Dorsey
  Tuesday, a signal of the strong ties between the Silicon Valley giants.
 '''
 
+
 # write your code here
+
+
+def url_correction(url: str) -> str:
+    if url[0:5] != 'https' or url[0:4] != 'http':
+        return "https://" + url
+    else:
+        return url
+
+
+def file_update(url: str) -> None:
+    if "." not in url:
+        return None
+    try:
+        status = requests.get(url_correction(url))
+    except:
+        status = 400
+    if 200 <= status.status_code < 400:
+        file.append(url)
+    else:
+        return None
+
+
+def get_content(url: str) -> str:
+    status = requests.get(url_correction(url))
+    return status.text
+
+
+def print_history(history: deque) -> None:
+    url = history.pop()
+    if url == 'bloomberg.com' or url == 'bloomberg':
+        print(bloomberg_com)
+    elif url == 'nytimes.com' or url == 'nytimes':
+        print(nytimes_com)
+
 
 args = sys.argv
 folder = args[1]
@@ -54,15 +91,8 @@ path = current_path + '\\' + folder + '\\'
 
 file = ["bloomberg.com", "nytimes.com"]
 url = input()
+file_update(url)
 history = deque()
-
-def print_history(history: deque) -> None:
-    url = history.pop()
-    if url == 'bloomberg.com' or url == 'bloomberg':
-        print(bloomberg_com)
-    elif url == 'nytimes.com' or url == 'nytimes':
-        print(nytimes_com)
-
 
 while url != 'exit':
     # Condition to check if we have the url in our data (file)
@@ -71,16 +101,10 @@ while url != 'exit':
         name = url.split(".")
         # Create a file_name to save file in tab(folder)
         file_name = ".".join(name[0:-1])
+        content = get_content(url)
+        print(content)
 
-        content = ""
-        if url == "nytimes.com":
-            content = nytimes_com
-            print(nytimes_com)
-        elif url == "bloomberg.com":
-            content = bloomberg_com
-            print(bloomberg_com)
-
-        with open(path + file_name + '.txt', 'w') as web_file:  # Create a file to save content
+        with open(path + file_name + '.txt', 'w', encoding='utf-8') as web_file:  # Create a file to save content
             web_file.write(content)
             file.append(file_name)
 
@@ -103,4 +127,5 @@ while url != 'exit':
         print("error: Please enter correct url.")
 
     url = input()
-
+    if url not in file and url != "exit":
+        file_update(url)
