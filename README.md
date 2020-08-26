@@ -1,4 +1,4 @@
-# Text-Based-Browser
+# Text-Based-Browser (Python Project)
 Project of JetBrains Academy on hyperskill.org from python developer track.
 
 
