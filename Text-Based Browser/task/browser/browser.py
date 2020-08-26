@@ -1,6 +1,8 @@
 import os
 import sys
 from collections import deque
+from bs4 import BeautifulSoup
+from bs4 import SoupStrainer
 
 import requests
 
@@ -63,9 +65,21 @@ def file_update(url: str) -> None:
         return None
 
 
-def get_content(url: str) -> str:
-    status = requests.get(url_correction(url))
-    return status.text
+def get_content(url):
+    selected_tags = SoupStrainer(['p', 'li', 'ol', 'ul', 'a'])
+    r = requests.get(url_correction(url))
+    soup = BeautifulSoup(r.content, 'html.parser', parse_only=selected_tags)
+
+    data = ""
+
+    paragraph = soup.find_all()
+    for p in paragraph:
+        if p.name == 'a':
+            data = data + '\033[34m' + p.text + '\033[39m' + "\n"
+        else:
+            data = data + p.text
+
+    return (data)
 
 
 def print_history(history: deque) -> None:
